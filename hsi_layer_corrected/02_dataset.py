@@ -1030,6 +1030,19 @@ if os.path.exists(_CONFIG_PATH):
     if "PCA_COMPONENTS" not in globals():
         exec(open(_CONFIG_PATH, encoding="utf-8").read())
 
+# Ensure all essential constants are defined for robust standalone and cloud import
+if "PCA_COMPONENTS" not in globals():
+    ORIGINAL_BANDS = 224
+    BANDS_TO_REMOVE = list(range(103, 113)) + list(range(149, 170))
+    EXPECTED_REMAINING_BANDS = ORIGINAL_BANDS - len(BANDS_TO_REMOVE)
+    PCA_COMPONENTS = 25
+    PATCH_SIZE = 5
+    PATCH_RADIUS = PATCH_SIZE // 2
+    TRAIN_STRIDE = 3
+    VAL_STRIDE = 3
+    TEST_STRIDE = 1
+    SEED = 42
+
 
 # ================================================================
 # DATA LOADING

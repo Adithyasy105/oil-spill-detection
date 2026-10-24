@@ -12,12 +12,14 @@
 # 3. Allow only essential SAR code (models & preprocessor)
 !/sar_layer/
 /sar_layer/*
+!/sar_layer/01_config.py
 !/sar_layer/02_dataset.py
 !/sar_layer/03_model.py
 
 # 4. Allow only essential HSI code & lightweight weights
 !/hsi_layer_corrected/
 /hsi_layer_corrected/*
+!/hsi_layer_corrected/01_config.py
 !/hsi_layer_corrected/02_dataset.py
 !/hsi_layer_corrected/03_model.py
 !/hsi_layer_corrected/weights/

@@ -19,12 +19,36 @@ from sklearn.model_selection import train_test_split
 
 # Import config — handles multiple execution contexts
 import sys
-_sar_dir = os.path.dirname(os.path.abspath(__file__)) if '__file__' in dir() else r"c:\Users\geeth\OneDrive\Pictures\random\OIL_SPILL\sar_layer"
-sys.path.insert(0, _sar_dir)
+_sar_dir = os.path.dirname(os.path.abspath(__file__)) if '__file__' in locals() or '__file__' in globals() else os.getcwd()
+if _sar_dir not in sys.path:
+    sys.path.insert(0, _sar_dir)
 
 # Only load config if not already loaded (avoids re-exec when chained)
 if 'IMG_SIZE' not in dir():
-    exec(open(os.path.join(_sar_dir, '01_config.py'), encoding='utf-8').read())
+    _cfg_path = os.path.join(_sar_dir, '01_config.py')
+    if os.path.exists(_cfg_path):
+        exec(open(_cfg_path, encoding='utf-8').read())
+    else:
+        # Fallback defaults for cloud deployment
+        IMG_SIZE = 256
+        IN_CHANNELS = 3
+        NUM_CLASSES = 1
+        ENCODER_NAME = "resnet18"
+        ENCODER_WEIGHTS = "imagenet"
+        DECODER_ATTENTION = "scse"
+        CANNY_LOW_THRESHOLD = 50
+        CANNY_HIGH_THRESHOLD = 150
+        MBL_SCALE_WEIGHTS = [0.5, 0.3, 0.2]
+        AUG_HFLIP_PROB = 0.5
+        AUG_VFLIP_PROB = 0.5
+        AUG_ROT90_PROB = 0.5
+        AUG_NOISE_PROB = 0.2
+        AUG_NOISE_STD = 0.05
+        VAL_SPLIT = 0.15
+        BATCH_SIZE = 8
+        RANDOM_SEED = 42
+        SOS_TRAIN_DIR = ""
+        SOS_TEST_DIR = ""
 
 # %% [markdown]
 # ## 1. Canny Edge Extraction (Boundary Targets for MBL)

@@ -28,19 +28,24 @@ if SAR_LAYER_DIR not in sys.path:
 if HSI_LAYER_DIR not in sys.path:
     sys.path.insert(0, HSI_LAYER_DIR)
 
+_sar_import_err = None
+_hsi_import_err = None
+
 # 1. SAR Module Loading (CBDNetSAR)
 try:
     import importlib.util
     spec_sar_m = importlib.util.spec_from_file_location("model_03_sar", os.path.join(SAR_LAYER_DIR, "03_model.py"))
     m3_sar = importlib.util.module_from_spec(spec_sar_m)
     spec_sar_m.loader.exec_module(m3_sar)
-    CBDNetSAR = m3_sar.CBDNetSAR
+    CBDNetSAR = getattr(m3_sar, "CBDNetSAR", None)
     
     spec_sar_ds = importlib.util.spec_from_file_location("dataset_02_sar", os.path.join(SAR_LAYER_DIR, "02_dataset.py"))
     ds2_sar = importlib.util.module_from_spec(spec_sar_ds)
     spec_sar_ds.loader.exec_module(ds2_sar)
-    preprocess_sar = ds2_sar.preprocess_sar
+    preprocess_sar = getattr(ds2_sar, "preprocess_sar", None)
 except Exception as e:
+    _sar_import_err = str(e)
+    print(f"[ERROR] SAR module import failed: {e}", file=sys.stderr)
     CBDNetSAR = None
     preprocess_sar = None
 
@@ -49,20 +54,22 @@ try:
     spec_hsi_m = importlib.util.spec_from_file_location("model_03_hsi", os.path.join(HSI_LAYER_DIR, "03_model.py"))
     m3_hsi = importlib.util.module_from_spec(spec_hsi_m)
     spec_hsi_m.loader.exec_module(m3_hsi)
-    HMOSDNet = m3_hsi.HMOSDNet
+    HMOSDNet = getattr(m3_hsi, "HMOSDNet", None)
     
     spec_hsi_ds = importlib.util.spec_from_file_location("dataset_02_hsi", os.path.join(HSI_LAYER_DIR, "02_dataset.py"))
     ds2_hsi = importlib.util.module_from_spec(spec_hsi_ds)
     spec_hsi_ds.loader.exec_module(ds2_hsi)
-    SpectralProcessor = ds2_hsi.SpectralProcessor
-    BANDS_TO_REMOVE_HSI = ds2_hsi.BANDS_TO_REMOVE
-    PCA_COMPONENTS_HSI = 25
-    PATCH_SIZE_HSI = 5
+    SpectralProcessor = getattr(ds2_hsi, "SpectralProcessor", None)
+    BANDS_TO_REMOVE_HSI = getattr(ds2_hsi, "BANDS_TO_REMOVE", list(range(103, 113)) + list(range(149, 170)))
+    PCA_COMPONENTS_HSI = getattr(ds2_hsi, "PCA_COMPONENTS", 25)
+    PATCH_SIZE_HSI = getattr(ds2_hsi, "PATCH_SIZE", 5)
     import scipy.io as sio
 except Exception as e:
+    _hsi_import_err = str(e)
+    print(f"[ERROR] HSI module import failed: {e}", file=sys.stderr)
     HMOSDNet = None
     SpectralProcessor = None
-    BANDS_TO_REMOVE_HSI = []
+    BANDS_TO_REMOVE_HSI = list(range(103, 113)) + list(range(149, 170))
     PCA_COMPONENTS_HSI = 25
     PATCH_SIZE_HSI = 5
     import scipy.io as sio
@@ -136,24 +143,31 @@ st.markdown("""
 def load_sar_expert():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     weights_path = os.path.join(SAR_LAYER_DIR, "weights", "best_sar_expert.pth")
-    if not os.path.exists(weights_path):
+    # Verify file existence and complete download (>100MB)
+    if not os.path.exists(weights_path) or os.path.getsize(weights_path) < 100_000_000:
         os.makedirs(os.path.dirname(weights_path), exist_ok=True)
         url = "https://huggingface.co/adi106/marine-oil-spill-weights/resolve/main/best_sar_expert.pth"
         try:
-            with st.spinner("Downloading SAR expert weights (~165MB)..."):
+            with st.spinner("Downloading SAR expert weights (~165MB) from Hugging Face Hub..."):
                 torch.hub.download_url_to_file(url, weights_path)
         except Exception as e:
+            print(f"[ERROR] Failed to download SAR weights: {e}", file=sys.stderr)
             st.sidebar.error(f"Failed to auto-download SAR weights: {e}")
-    if CBDNetSAR is None or not os.path.exists(weights_path):
+    if CBDNetSAR is None:
+        print(f"[WARN] CBDNetSAR is None. Import error: {_sar_import_err}", file=sys.stderr)
+        return None, device
+    if not os.path.exists(weights_path) or os.path.getsize(weights_path) < 100_000_000:
+        print("[WARN] SAR weights file not found or incomplete.", file=sys.stderr)
         return None, device
     try:
-        model = CBDNetSAR().to(device)
+        model = CBDNetSAR(encoder_weights=None).to(device)
         checkpoint = torch.load(weights_path, map_location=device, weights_only=False)
         sd = checkpoint['model_state_dict'] if isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint else checkpoint
         model.load_state_dict(sd)
         model.eval()
         return model, device
     except Exception as e:
+        print(f"[ERROR] SAR Weight Load Error: {e}", file=sys.stderr)
         st.sidebar.error(f"⚠️ SAR Weight Load Error: {e}")
         return None, device
 
@@ -173,10 +187,15 @@ def load_hsi_expert():
         try:
             processor = SpectralProcessor(n_components=PCA_COMPONENTS_HSI, bands_to_remove=BANDS_TO_REMOVE_HSI)
             processor.load(pca_path)
-        except Exception:
+        except Exception as e:
+            print(f"[ERROR] HSI SpectralProcessor load error: {e}", file=sys.stderr)
             processor = None
 
-    if HMOSDNet is None or not os.path.exists(weights_path):
+    if HMOSDNet is None:
+        print(f"[WARN] HMOSDNet is None. Import error: {_hsi_import_err}", file=sys.stderr)
+        return None, processor, device
+    if not os.path.exists(weights_path):
+        print(f"[WARN] HSI weights not found at {weights_path}", file=sys.stderr)
         return None, processor, device
 
     try:
@@ -187,6 +206,7 @@ def load_hsi_expert():
         model.eval()
         return model, processor, device
     except Exception as e:
+        print(f"[ERROR] HSI Weight Load Error: {e}", file=sys.stderr)
         st.sidebar.error(f"⚠️ HSI Weight Load Error: {e}")
         return None, processor, device
 
@@ -879,6 +899,11 @@ with tab_fusion:
                     {"Model Architecture": f"CAFE-Fusion v2 (MC T={mc_passes})", "Detected Area": f"{fus_area_live:,} px", "Mean Confidence": f"{np.mean(p_fus_live)*100:.1f}%", "Uncertainty": f"{mean_unc_live:.2e}"},
                 ])
             st.dataframe(live_df, width='stretch', hide_index=True)
+        elif up_sar is not None and up_hsi is not None:
+            missing = []
+            if model_sar is None: missing.append("SAR Expert (CBD-Net)")
+            if model_hsi is None: missing.append("HSI Expert (HMOSDNet)")
+            st.warning(f"⚠️ Live fusion inference requires all expert models to be ONLINE. Currently offline: {', '.join(missing)}.")
 
 
 # =============================================================================
@@ -887,7 +912,9 @@ with tab_fusion:
 with tab_sar:
     uploaded_file = st.file_uploader("Select SAR Data Stream (.npy / .jpg)", type=["npy", "jpg", "png", "jpeg"], key="sar_single")
 
-    if uploaded_file is not None and model_sar:
+    if uploaded_file is not None and model_sar is None:
+        st.warning("⚠️ CBD-Net SAR Expert model is currently OFFLINE. Please check the sidebar status.")
+    elif uploaded_file is not None and model_sar is not None:
         # 1. Pipeline: Load & Process
         if uploaded_file.name.endswith(".npy"):
             data = np.load(uploaded_file)
@@ -1046,7 +1073,9 @@ with tab_sar:
 with tab_hsi:
     uploaded_hsi = st.file_uploader("Select Hyperspectral Cube (.mat)", type=["mat"], key="hsi_upload")
     
-    if uploaded_hsi is not None and model_hsi and processor_hsi:
+    if uploaded_hsi is not None and (model_hsi is None or processor_hsi is None):
+        st.warning("⚠️ HMOSDNet HSI Spectral Expert model or processor is currently OFFLINE. Please check the sidebar status.")
+    elif uploaded_hsi is not None:
         try:
             data_hsi = sio.loadmat(uploaded_hsi)
             img_key = [k for k in data_hsi.keys() if not k.startswith('__') and k not in ['gt', 'map', 'index']][0]
