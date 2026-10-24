@@ -1,0 +1,50 @@
+# 1. Ignore everything by default
+/*
+
+# 2. Allow essential root files
+!/.gitignore
+!/README.md
+!/app.py
+!/requirements.txt
+!/.streamlit/
+!/Dockerfile
+
+# 3. Allow only essential SAR code (models & preprocessor)
+!/sar_layer/
+/sar_layer/*
+!/sar_layer/02_dataset.py
+!/sar_layer/03_model.py
+
+# 4. Allow only essential HSI code & lightweight weights
+!/hsi_layer_corrected/
+/hsi_layer_corrected/*
+!/hsi_layer_corrected/02_dataset.py
+!/hsi_layer_corrected/03_model.py
+!/hsi_layer_corrected/weights/
+/hsi_layer_corrected/weights/*
+!/hsi_layer_corrected/weights/frozen_hsi_expert.pth
+!/hsi_layer_corrected/weights/best_hsi_expert.pth
+!/hsi_layer_corrected/weights/spectral_processor.pkl
+
+# 5. Allow only CAFE-Fusion v2 primary models & cached scene features
+!/fusion_layer/
+/fusion_layer/*
+!/fusion_layer/cache_features/
+/fusion_layer/cache_features/*
+!/fusion_layer/cache_features/train_features.npz
+!/fusion_layer/cache_features/validation_features.npz
+!/fusion_layer/cache_features/test_features.npz
+!/fusion_layer/experiments/
+/fusion_layer/experiments/*
+!/fusion_layer/experiments/cafe_fusion_v2/
+/fusion_layer/experiments/cafe_fusion_v2/*
+!/fusion_layer/experiments/cafe_fusion_v2/primary_results/
+/fusion_layer/experiments/cafe_fusion_v2/primary_results/**
+
+# 6. Allow audit figures for the Scene Explorer view
+!/final_fusion_audit/
+/final_fusion_audit/*
+!/final_fusion_audit/figures/
+/final_fusion_audit/figures/*
+!/final_fusion_audit/figures/fusion/
+/final_fusion_audit/figures/fusion/*.png
