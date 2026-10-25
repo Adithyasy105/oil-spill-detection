@@ -1,0 +1,5 @@
+{
+  "pixel_level_registered": false,
+  "pixel_level_fusion_allowed_by_this_audit": false,
+  "reason": "SAR and HSI samples are treated as scene-paired, but this audit does not establish physical pixel-level registration, geospatial co-registration, identical projection, identical resolution, or same-pixel correspondence. Equal array dimensions, if present, are not evidence of pixel registration. Therefore pixel-aligned fusion is not authorized by this audit."
+}

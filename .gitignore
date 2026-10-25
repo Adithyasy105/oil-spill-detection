@@ -1,52 +1,115 @@
-# 1. Ignore everything by default
-/*
+# =============================================================================
+# Python, Cache & Environment
+# =============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.ipynb_checkpoints/
 
-# 2. Allow essential root files
-!/.gitignore
-!/README.md
-!/app.py
-!/requirements.txt
-!/.streamlit/
-!/Dockerfile
+# =============================================================================
+# IDE & System Files
+# =============================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
 
-# 3. Allow only essential SAR code (models & preprocessor)
-!/sar_layer/
-/sar_layer/*
-!/sar_layer/01_config.py
-!/sar_layer/02_dataset.py
-!/sar_layer/03_model.py
+# =============================================================================
+# LaTeX & Auxiliary Build Artifacts
+# =============================================================================
+*.aux
+*.log
+*.bbl
+*.blg
+*.out
+*.toc
+*.synctex.gz
+backup_*.tex
+main.pdf
+test_compile.pdf
 
-# 4. Allow only essential HSI code & lightweight weights
-!/hsi_layer_corrected/
-/hsi_layer_corrected/*
-!/hsi_layer_corrected/01_config.py
-!/hsi_layer_corrected/02_dataset.py
-!/hsi_layer_corrected/03_model.py
-!/hsi_layer_corrected/weights/
-/hsi_layer_corrected/weights/*
-!/hsi_layer_corrected/weights/frozen_hsi_expert.pth
-!/hsi_layer_corrected/weights/best_hsi_expert.pth
-!/hsi_layer_corrected/weights/spectral_processor.pkl
+# =============================================================================
+# Large Remote Sensing Datasets (Download links documented in README)
+# =============================================================================
+SOS_dataset/
+hsi_dataste/
+new_dataset/
+*.mat
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.rar
 
-# 5. Allow only CAFE-Fusion v2 primary models & cached scene features
-!/fusion_layer/
-/fusion_layer/*
-!/fusion_layer/cache_features/
-/fusion_layer/cache_features/*
-!/fusion_layer/cache_features/train_features.npz
-!/fusion_layer/cache_features/validation_features.npz
-!/fusion_layer/cache_features/test_features.npz
-!/fusion_layer/experiments/
-/fusion_layer/experiments/*
-!/fusion_layer/experiments/cafe_fusion_v2/
-/fusion_layer/experiments/cafe_fusion_v2/*
-!/fusion_layer/experiments/cafe_fusion_v2/primary_results/
-/fusion_layer/experiments/cafe_fusion_v2/primary_results/**
+# =============================================================================
+# Heavy Model Checkpoints (>50MB, Hosted on Hugging Face Hub)
+# =============================================================================
+sar_layer/weights/*.pth
+sar_layer/logs/
+hsi_layer_corrected/logs/
+hsi_layer_corrected/results/
+fusion_layer/logs/
+fusion_layer/results/
+fusion_layer/cache/
+*.pth.tar
 
-# 6. Allow audit figures for the Scene Explorer view
-!/final_fusion_audit/
-/final_fusion_audit/*
-!/final_fusion_audit/figures/
-/final_fusion_audit/figures/*
-!/final_fusion_audit/figures/fusion/
-/final_fusion_audit/figures/fusion/*.png
+# =============================================================================
+# Deprecated / Experimental Scratch Folders (Not used by production app.py)
+# =============================================================================
+hsi_layer/
+fusion_layer0/
+extra/
+extra2/
+test/
+corrected_paper/
+evaluation_results/
+evaluation_results_correct/
+evaluation_final_corrected/
+scratch_arch*.png
+fusion_layer/experiments/scene_cv_6fold/
+fusion_layer/experiments/gm17_swap/
+fusion_layer/experiments/gm17_swap_gate_supervision/
+fusion_layer/experiments/cafe_fusion_variant_c/
+fusion_layer/experiments/cafe_fusion_mc_confidence/
+fusion_layer/experiments/enriched_features/
+fusion_layer/experiments/reliability_fusion_v1/
+fusion_layer/baseline_fixed_split/
+fusion_layer/audit/
+fusion_layer/dataset_audit/
+fusion_layer/evaluation/
+fusion_layer/weights/
+papers/
+test_compile.tex
+archi1.png
+archi2.png
+fusion_chart_test.png
+build_clean_paper.py
+Pro_Architecture.png
+figure_mc_risk_coverage.png
+image.png
+

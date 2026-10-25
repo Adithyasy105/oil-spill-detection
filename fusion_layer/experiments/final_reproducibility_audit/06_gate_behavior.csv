@@ -1,0 +1,5 @@
+Group,Pixel Fraction,Mean Gate g,Interpretation
+Group A (Both Correct),0.734,0.124,Both modalities reliable; modest gate
+"Group B (HSI Correct, SAR Wrong)",0.208,0.105,"Gate suppresses SAR, protects HSI"
+"Group C (HSI Wrong, SAR Correct)",0.031,0.384,"Gate elevates SAR, corrects HSI"
+Group D (Both Wrong),0.027,0.198,Both noisy; fallback state

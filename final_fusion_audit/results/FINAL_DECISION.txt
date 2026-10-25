@@ -1,0 +1,20 @@
+FINAL DECISION
+--------------
+SAR mean test mIoU : 0.645557
+HSI mean test mIoU : 0.686319
+HSI - SAR         : +0.040762
+Scene oracle mIoU  : 0.736659
+SAR scene wins     : 2
+HSI scene wins     : 4
+Pixel registered   : False
+Fusion             : REGISTRATION-FREE CROSS-MODAL FUSION
+Anchor             : SAR
+
+Recommendation:
+  1. Freeze both experts.
+  2. Do not retrain SAR/HSI from this audit.
+  3. Use registration-free cross-modal fusion.
+  4. Use SAR as the conservative anchor.
+  5. Let HSI/cross-modal evidence make bounded corrections.
+  6. Keep threshold selection validation-only.
+  7. Evaluate TEST once for final reporting.

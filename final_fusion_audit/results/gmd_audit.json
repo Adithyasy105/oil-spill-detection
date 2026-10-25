@@ -1,0 +1,5 @@
+{
+  "status": "NOT_AVAILABLE",
+  "used_for_metrics": false,
+  "reason": "No GMD directory was found in the known project locations."
+}

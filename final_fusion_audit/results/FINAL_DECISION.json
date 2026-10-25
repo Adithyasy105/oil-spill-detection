@@ -1,0 +1,17 @@
+{
+  "sar_mean_test_mIoU": 0.6455565406049563,
+  "hsi_mean_test_mIoU": 0.6863185083115931,
+  "hsi_minus_sar_mIoU": 0.04076196770663687,
+  "stronger_single_expert": "HSI",
+  "scene_oracle_mIoU": 0.7366587188230386,
+  "sar_scene_wins": 2,
+  "hsi_scene_wins": 4,
+  "complementarity_evidence": true,
+  "pixel_registration": false,
+  "recommended_fusion_type": "REGISTRATION-FREE CROSS-MODAL FUSION",
+  "recommended_anchor": "SAR",
+  "anchor_reason": "HSI is stronger on mean scene mIoU, but SAR is retained as the conservative spatial/segmentation anchor while HSI and cross-modal evidence provide bounded residual corrections.",
+  "recommended_training_policy": "Keep SAR and corrected HSI experts frozen. Train only the fusion head. Use validation-only threshold selection and never tune fusion hyperparameters on TEST.",
+  "recommended_r2cf_v6": true,
+  "reason": "The two experts win different test scenes, so a scene-level oracle is stronger than either single expert. The current dataset contract does not establish pixel-level registration, so the fusion architecture must not assume same-pixel correspondence."
+}

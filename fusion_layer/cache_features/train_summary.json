@@ -1,0 +1,25 @@
+{
+  "split": "train",
+  "num_samples": 45000,
+  "sar_features": [
+    45000,
+    42
+  ],
+  "hsi_features": [
+    45000,
+    64
+  ],
+  "hsi_logits": [
+    45000,
+    1
+  ],
+  "hsi_confidence": [
+    45000,
+    1
+  ],
+  "positive_samples": 22500,
+  "positive_fraction": 0.5,
+  "elapsed_seconds": 61.115076303482056,
+  "samples_per_second": 736.3158605340088,
+  "cache_path": "C:\\Users\\geeth\\OneDrive\\Pictures\\random\\OIL_SPILL\\fusion_layer\\cache_features\\train_features.npz"
+}

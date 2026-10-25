@@ -1,0 +1,4 @@
+Experiment,Fusion Space,lambda_rel,Hard/Soft/None Supervision,HSI Regularization,Mean_F1,Std_F1,Delta_vs_HSI,Folds_Beating_HSI,Mean_Gate,Mean_Gate_AUC,Oracle_Gap_Recovery
+CAFE v2 (Primary),Logit,0.1,Hard Masked,0.01,0.9288,0.0270,+0.0027,5/6,0.1667,0.7685,11.34%
+Ablation A: No Reliability Sup,Logit,0.0,None,0.01,0.9288,0.0269,+0.0027,5/6,0.1579,0.7190,11.21%
+Ablation B: Weak Reliability Sup,Logit,0.05,Hard Masked,0.01,0.9292,0.0270,+0.0031,5/6,0.1637,0.7798,12.87%

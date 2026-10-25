@@ -1,0 +1,319 @@
+{
+  "experiment_name": "CAFE-Fusion v2 (Confidence-Aware Feature Ensemble)",
+  "git_commit_hash_if_available": "HEAD (frozen workspace)",
+  "timestamp_of_audit": "2026-08-26T07:41:41.632652+00:00",
+  "python_version": "3.12.9 (tags/v3.12.9:fdb8142, Feb  4 2025, 15:27:58) [MSC v.1942 64 bit (AMD64)]",
+  "pytorch_version": "2.5.1+cu121",
+  "cuda_version": "12.1",
+  "gpu_information": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "random_seeds": {
+    "torch": 42,
+    "numpy": 42,
+    "cuda": 42
+  },
+  "dataset_information": {
+    "number_of_scenes": 18,
+    "scene_ids": [
+      "GM01",
+      "GM02",
+      "GM03",
+      "GM04",
+      "GM05",
+      "GM06",
+      "GM07",
+      "GM08",
+      "GM09",
+      "GM10",
+      "GM11",
+      "GM12",
+      "GM13",
+      "GM14",
+      "GM15",
+      "GM16",
+      "GM17",
+      "GM18"
+    ],
+    "fold_definitions": [
+      {
+        "fold_id": 1,
+        "test_scenes": [
+          "GM01",
+          "GM02",
+          "GM03"
+        ],
+        "val_scenes": [
+          "GM04",
+          "GM05",
+          "GM06"
+        ],
+        "train_scenes": [
+          "GM07",
+          "GM08",
+          "GM09",
+          "GM10",
+          "GM11",
+          "GM12",
+          "GM13",
+          "GM14",
+          "GM15",
+          "GM16",
+          "GM17",
+          "GM18"
+        ]
+      },
+      {
+        "fold_id": 2,
+        "test_scenes": [
+          "GM04",
+          "GM05",
+          "GM06"
+        ],
+        "val_scenes": [
+          "GM07",
+          "GM08",
+          "GM09"
+        ],
+        "train_scenes": [
+          "GM01",
+          "GM02",
+          "GM03",
+          "GM10",
+          "GM11",
+          "GM12",
+          "GM13",
+          "GM14",
+          "GM15",
+          "GM16",
+          "GM17",
+          "GM18"
+        ]
+      },
+      {
+        "fold_id": 3,
+        "test_scenes": [
+          "GM07",
+          "GM08",
+          "GM09"
+        ],
+        "val_scenes": [
+          "GM10",
+          "GM11",
+          "GM12"
+        ],
+        "train_scenes": [
+          "GM01",
+          "GM02",
+          "GM03",
+          "GM04",
+          "GM05",
+          "GM06",
+          "GM13",
+          "GM14",
+          "GM15",
+          "GM16",
+          "GM17",
+          "GM18"
+        ]
+      },
+      {
+        "fold_id": 4,
+        "test_scenes": [
+          "GM10",
+          "GM11",
+          "GM12"
+        ],
+        "val_scenes": [
+          "GM13",
+          "GM14",
+          "GM15"
+        ],
+        "train_scenes": [
+          "GM01",
+          "GM02",
+          "GM03",
+          "GM04",
+          "GM05",
+          "GM06",
+          "GM07",
+          "GM08",
+          "GM09",
+          "GM16",
+          "GM17",
+          "GM18"
+        ]
+      },
+      {
+        "fold_id": 5,
+        "test_scenes": [
+          "GM13",
+          "GM14",
+          "GM15"
+        ],
+        "val_scenes": [
+          "GM16",
+          "GM17",
+          "GM18"
+        ],
+        "train_scenes": [
+          "GM01",
+          "GM02",
+          "GM03",
+          "GM04",
+          "GM05",
+          "GM06",
+          "GM07",
+          "GM08",
+          "GM09",
+          "GM10",
+          "GM11",
+          "GM12"
+        ]
+      },
+      {
+        "fold_id": 6,
+        "test_scenes": [
+          "GM16",
+          "GM17",
+          "GM18"
+        ],
+        "val_scenes": [
+          "GM01",
+          "GM02",
+          "GM03"
+        ],
+        "train_scenes": [
+          "GM04",
+          "GM05",
+          "GM06",
+          "GM07",
+          "GM08",
+          "GM09",
+          "GM10",
+          "GM11",
+          "GM12",
+          "GM13",
+          "GM14",
+          "GM15"
+        ]
+      }
+    ]
+  },
+  "primary_configuration": {
+    "fusion_space": "logit-space geometric mixing",
+    "lambda_rel": 0.1,
+    "epsilon_reg": 0.01,
+    "gate_prior": "bias init -2.0 (g_init approx 0.119 HSI anchor)",
+    "checkpoint_selection_protocol": "validation-only peak F1",
+    "threshold_selection_protocol": "validation-only sweep [0.01, 0.99, step=0.005]"
+  },
+  "per_fold": [
+    {
+      "fold_id": 1,
+      "test_scenes": [
+        "GM01",
+        "GM02",
+        "GM03"
+      ],
+      "selected_checkpoint": "fold_01/lambda_0.10/best_cafe_model.pth",
+      "selected_threshold": 0.5,
+      "HSI_F1": 0.9531033572983313,
+      "SAR_F1": 0.8549141965678627,
+      "CAFE_F1": 0.9555730809674028,
+      "HSI_IoU": 0.9104082661281627,
+      "SAR_IoU": 0.7465940054489393,
+      "CAFE_IoU": 0.9149257488035539,
+      "oracle_F1": 0.9532530120481928,
+      "gate_ROC_AUC": 0.8195736396828266
+    },
+    {
+      "fold_id": 2,
+      "test_scenes": [
+        "GM04",
+        "GM05",
+        "GM06"
+      ],
+      "selected_checkpoint": "fold_02/lambda_0.10/best_cafe_model.pth",
+      "selected_threshold": 0.5,
+      "HSI_F1": 0.9532879818594104,
+      "SAR_F1": 0.7774308329097378,
+      "CAFE_F1": 0.9544069005772099,
+      "HSI_IoU": 0.9107452339679339,
+      "SAR_IoU": 0.6358992634824924,
+      "CAFE_IoU": 0.9127899764288501,
+      "oracle_F1": 0.961993941063068,
+      "gate_ROC_AUC": 0.6941149950949277
+    },
+    {
+      "fold_id": 3,
+      "test_scenes": [
+        "GM07",
+        "GM08",
+        "GM09"
+      ],
+      "selected_checkpoint": "fold_03/lambda_0.10/best_cafe_model.pth",
+      "selected_threshold": 0.5,
+      "HSI_F1": 0.9507590759075908,
+      "SAR_F1": 0.8000769674812391,
+      "CAFE_F1": 0.939732899464443,
+      "HSI_IoU": 0.906139909410309,
+      "SAR_IoU": 0.6667735728025231,
+      "CAFE_IoU": 0.8863171355490361,
+      "oracle_F1": 0.9446381257844094,
+      "gate_ROC_AUC": 0.8325395192291309
+    },
+    {
+      "fold_id": 4,
+      "test_scenes": [
+        "GM10",
+        "GM11",
+        "GM12"
+      ],
+      "selected_checkpoint": "fold_04/lambda_0.10/best_cafe_model.pth",
+      "selected_threshold": 0.5,
+      "HSI_F1": 0.8931991756576555,
+      "SAR_F1": 0.8443810881444523,
+      "CAFE_F1": 0.8947815533980582,
+      "HSI_IoU": 0.8070098576115382,
+      "SAR_IoU": 0.7306743421046309,
+      "CAFE_IoU": 0.8095970132857502,
+      "oracle_F1": 0.960667299606673,
+      "gate_ROC_AUC": 0.41773299309270534
+    },
+    {
+      "fold_id": 5,
+      "test_scenes": [
+        "GM13",
+        "GM14",
+        "GM15"
+      ],
+      "selected_checkpoint": "fold_05/lambda_0.10/best_cafe_model.pth",
+      "selected_threshold": 0.5,
+      "HSI_F1": 0.9184155663655316,
+      "SAR_F1": 0.8384778284027465,
+      "CAFE_F1": 0.9310228118865498,
+      "HSI_IoU": 0.8491390388067193,
+      "SAR_IoU": 0.7218784530380524,
+      "CAFE_IoU": 0.8709473150954364,
+      "oracle_F1": 0.9004498621390219,
+      "gate_ROC_AUC": 0.9222019566774368
+    },
+    {
+      "fold_id": 6,
+      "test_scenes": [
+        "GM16",
+        "GM17",
+        "GM18"
+      ],
+      "selected_checkpoint": "fold_06/lambda_0.10/best_cafe_model.pth",
+      "selected_threshold": 0.5,
+      "HSI_F1": 0.8876104376412575,
+      "SAR_F1": 0.899499328367322,
+      "CAFE_F1": 0.8972386316801758,
+      "HSI_IoU": 0.797931289249375,
+      "SAR_IoU": 0.817354638259355,
+      "CAFE_IoU": 0.8136290021171144,
+      "oracle_F1": 0.9798585382283597,
+      "gate_ROC_AUC": 0.9246793785082692
+    }
+  ]
+}

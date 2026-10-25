@@ -1,0 +1,4 @@
+split,sar_files,hsi_files,matched,scenes
+train,9,9,9,"GM01,GM02,GM06,GM07,GM08,GM12,GM13,GM14,GM18"
+val,3,3,3,"GM03,GM09,GM15"
+test,6,6,6,"GM04,GM05,GM10,GM11,GM16,GM17"

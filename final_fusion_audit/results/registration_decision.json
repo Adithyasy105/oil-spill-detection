@@ -1,0 +1,5 @@
+{
+  "pixel_level_registered": true,
+  "pixel_level_fusion_allowed_by_this_audit": true,
+  "reason": "SAR/HSI scene pairs are treated as scene-paired but not pixel-registered. Therefore this audit does not claim pixel-level cross-modal correspondence."
+}

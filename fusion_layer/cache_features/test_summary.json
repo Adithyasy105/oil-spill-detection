@@ -1,0 +1,25 @@
+{
+  "split": "test",
+  "num_samples": 30000,
+  "sar_features": [
+    30000,
+    42
+  ],
+  "hsi_features": [
+    30000,
+    64
+  ],
+  "hsi_logits": [
+    30000,
+    1
+  ],
+  "hsi_confidence": [
+    30000,
+    1
+  ],
+  "positive_samples": 15000,
+  "positive_fraction": 0.5,
+  "elapsed_seconds": 33.76709747314453,
+  "samples_per_second": 888.4388130741602,
+  "cache_path": "C:\\Users\\geeth\\OneDrive\\Pictures\\random\\OIL_SPILL\\fusion_layer\\cache_features\\test_features.npz"
+}

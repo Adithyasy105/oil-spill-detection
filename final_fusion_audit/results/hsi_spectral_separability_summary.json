@@ -1,0 +1,9 @@
+{
+  "scene_count": 9,
+  "mean_abs_mean_difference": 92.65488678793639,
+  "mean_cohens_d": 1.120061752726667,
+  "median_cohens_d": 1.11505824390439,
+  "max_cohens_d": 2.8721067229852095,
+  "fraction_bands_d_gt_0_5": 0.8125000000000001,
+  "fraction_bands_d_gt_0_8": 0.7271825396825397
+}

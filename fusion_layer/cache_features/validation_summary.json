@@ -1,0 +1,25 @@
+{
+  "split": "validation",
+  "num_samples": 15000,
+  "sar_features": [
+    15000,
+    42
+  ],
+  "hsi_features": [
+    15000,
+    64
+  ],
+  "hsi_logits": [
+    15000,
+    1
+  ],
+  "hsi_confidence": [
+    15000,
+    1
+  ],
+  "positive_samples": 7500,
+  "positive_fraction": 0.5,
+  "elapsed_seconds": 39.28162145614624,
+  "samples_per_second": 381.8579642071524,
+  "cache_path": "C:\\Users\\geeth\\OneDrive\\Pictures\\random\\OIL_SPILL\\fusion_layer\\cache_features\\validation_features.npz"
+}

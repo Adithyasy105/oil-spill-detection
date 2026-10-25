@@ -1,0 +1,10 @@
+{
+  "n_test_scenes": 6,
+  "sar_wins_mIoU": 2,
+  "hsi_wins_mIoU": 4,
+  "mean_sar_mIoU": 0.6455565406049563,
+  "mean_hsi_mIoU": 0.6863185083115931,
+  "mean_scene_oracle_mIoU": 0.7366587188230386,
+  "mean_scene_oracle_Dice": 0.6675282729094868,
+  "scene_error_correlation": 0.2335265028899618
+}

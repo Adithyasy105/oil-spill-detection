@@ -1,0 +1,5 @@
+Method,Early Fusion,Feature Fusion,Decision Fusion,Cross Attention,Dynamic Gate,Reliability Supervision,HSI/Strong-Expert Anchor,Logit-Space Mixing,Registration-Free,Explicit Expert Protection,Validation-Based Thresholding,Failure Analysis Included
+Early / Input Fusion,YES,NO,NO,NO,NO,NO,NO,NO,NO,NO,NO,NO
+Cross-Attention Feature Fusion,NO,YES,NO,YES,PARTIAL,NO,NO,NO,NO,NO,NO,PARTIAL
+Legacy Residual Fusion,NO,NO,YES,NO,NO,NO,PARTIAL,NO,YES,NO,YES,NO
+CAFE-Fusion v2 (Ours),NO,NO,YES,NO,YES,YES,YES,YES,YES,YES,YES,YES

@@ -1,0 +1,7 @@
+Metric,Value
+HSI Baseline F1,0.9261
+CAFE-Fusion v2 F1,0.9288
+Oracle Ceiling F1,0.9501
+Total Complementary Oracle Gap,0.024
+CAFE Absolute Gain over HSI,0.0027
+Oracle Gap Recovered %,11.34%

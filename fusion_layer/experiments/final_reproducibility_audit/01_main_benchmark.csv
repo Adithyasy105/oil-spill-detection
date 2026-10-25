@@ -1,0 +1,7 @@
+Model,Mean F1,Std F1,Mean IoU,Std IoU,Delta vs HSI,Folds Won,Oracle Recovery %
+SAR Only (CBD-Net),0.8358,0.0429,0.7199,0.0636,-0.0903,0/6,N/A
+Legacy Registration-Free Fusion,0.9172,0.0286,0.849,0.0435,-0.0089,1/6,Negative
+CAFE Variant C (Hard Router),0.9253,0.0247,0.8618,0.0428,-0.0007,4/6,-3.07%
+HSI Baseline (HMOSDN),0.9261,0.0307,0.8636,0.0528,Baseline,N/A,0.00%
+CAFE-Fusion v2 (Ours),0.9288,0.027,0.8679,0.0465,0.0027,5/6,11.34%
+Oracle Upper Bound,0.9501,0.027,0.906,0.0479,0.024,6/6,100.0%
